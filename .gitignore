@@ -1,0 +1,30 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Env / secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Laravel
+laravel/vendor/
+laravel/node_modules/
+laravel/storage/*.key
+laravel/storage/framework/
+laravel/storage/logs/
+laravel/bootstrap/cache/
+laravel/public/storage
+
+# Nuxt
+nuxt/node_modules/
+nuxt/.nuxt/
+nuxt/.output/
+nuxt/.nitro/
+nuxt/dist/
+
+# Docker volumes / misc
+mysql_data/
+*.log

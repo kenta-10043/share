@@ -1,0 +1,67 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: laravel_db
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: laravel_pass
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Tokyo
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2.3
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: laravel_user
+      PMA_PASSWORD: laravel_pass
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+
+  laravel:
+    build:
+      context: .
+      dockerfile: docker/laravel/Dockerfile
+    working_dir: /var/www/laravel
+    volumes:
+      - ./laravel:/var/www/laravel
+      - laravel_vendor:/var/www/laravel/vendor
+    ports:
+      - "8000:8000"
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: laravel_db
+      DB_USERNAME: laravel_user
+      DB_PASSWORD: laravel_pass
+      TZ: Asia/Tokyo
+    depends_on:
+      - mysql
+
+  nuxt:
+    build:
+      context: .
+      dockerfile: docker/nuxt/Dockerfile
+    working_dir: /app
+    volumes:
+      - ./nuxt:/app
+      - nuxt_node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      # ブラウザ（=あなたのPC）からAPIを叩くURL
+      NUXT_PUBLIC_API_BASE: "http://localhost:8000"
+      TZ: Asia/Tokyo
+    depends_on:
+      - laravel
+
+volumes:
+  mysql_data:
+  laravel_vendor:
+  nuxt_node_modules:
