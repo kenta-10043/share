@@ -1,10 +1,11 @@
 <script setup lang="ts">
-const { init } = useAuth();
+const { init, loading } = useAuth();
 onMounted(() => init());
 </script>
 
 <template>
-    <div>
+    <p v-if="loading" class="text-white">loading...</p>
+    <div v-else>
         <NuxtRouteAnnouncer />
         <NuxtPage />
     </div>

@@ -15,7 +15,7 @@ export const useAuth = () => {
   const inited = useState<boolean>("fb_inited", () => false);
 
   const init = () => {
-    if (!process.client) return;
+    if (!import.meta.client) return;
     if (inited.value) return;
     inited.value = true;
 
