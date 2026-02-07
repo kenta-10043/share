@@ -3,7 +3,7 @@ import logo from '@/assets/images/logo.png'
 import home from '@/assets/images/home.png'
 import logoutImg from '@/assets/images/logout.png'
 
-const { logout } = useAuth();
+const { logout, processing } = useAuth();
 const handleLogout = async () => {
     await logout();
     await navigateTo("/login");
@@ -29,7 +29,8 @@ const onSendMessage = () => {
 
             <div class="flex mt-7">
                 <img class="w-6 inline-block" :src="logoutImg" alt="logout">
-                <button @click="handleLogout" class="text-white text-lg">ログアウト</button>
+                <button @click="handleLogout" :disabled="processing" class="text-white text-lg">{{ processing ?
+                    "ログアウト中..." : "ログアウト" }}</button>
             </div>
 
             <form @submit="onSendMessage" class="flex flex-col mt-7 mr-5">

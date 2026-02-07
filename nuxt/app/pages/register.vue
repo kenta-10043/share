@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { register } = useAuth();
+const { register, processing } = useAuth();
 
 const email = ref('');
 const password = ref('');
@@ -32,9 +32,9 @@ const onSubmit = async () => {
                     placeholder="  メールアドレス">
                 <input v-model='password' class="border border-black rounded-lg w-80 h-10 m-3 " type="password"
                     placeholder="  パスワード">
-                <button type="submit"
+                <button type="submit" :disabled="processing"
                     class="bg-blue-600 w-32  text-white font-bold p-2 rounded-full shadow-sm shadow-gray-800 hover:bg-blue-400  active:translate-y-1">
-                    新規登録
+                    {{ processing ? "新規登録中..." : "新規登録" }}
                 </button>
 
             </form>

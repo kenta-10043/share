@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-    if (import.meta.server) return;
+  if (import.meta.server) return;
 
   const { user, loading, init } = useAuth();
   init();

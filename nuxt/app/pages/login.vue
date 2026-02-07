@@ -5,7 +5,7 @@ const email = ref("");
 const password = ref("");
 const errorMsg = ref("");
 
-const { login } = useAuth();
+const { login, processing } = useAuth();
 const handleLogin = async () => {
     errorMsg.value = "";
     try {
@@ -51,8 +51,9 @@ const handleLogin = async () => {
                 <input class="border border-black rounded-lg w-80 h-10 m-3 " v-model="password" type="password"
                     placeholder="  パスワード">
                 <button type="submit"
-                    class="bg-blue-600 w-32  text-white font-bold p-2 rounded-full shadow-sm shadow-gray-800 hover:bg-blue-400  active:translate-y-1">
-                    ログイン
+                    class="bg-blue-600 w-32  text-white font-bold p-2 rounded-full shadow-sm shadow-gray-800 hover:bg-blue-400  active:translate-y-1"
+                    :disabled="processing">
+                    {{ processing ? "ログイン中..." : "ログイン" }}
                 </button>
 
             </form>

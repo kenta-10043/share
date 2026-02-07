@@ -18,6 +18,10 @@ laravel/storage/logs/
 laravel/bootstrap/cache/
 laravel/public/storage
 
+#firebase
+laravel/storage/app/firebase-service-account.json
+
+
 # Nuxt
 nuxt/node_modules/
 nuxt/.nuxt/

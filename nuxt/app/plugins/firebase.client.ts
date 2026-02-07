@@ -13,13 +13,4 @@ export default defineNuxtPlugin(() => {
           appId: config.appId,
         })
       : getApps()[0];
-
-  const auth = getAuth(app);
-
-  return {
-    provide: {
-      firebaseApp: app,
-      firebaseAuth: auth,
-    },
-  };
 });
