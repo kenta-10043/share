@@ -1,12 +1,29 @@
 <script setup lang="ts">
-const { user } = useAuth();
+const api = useLaravelApi()
+
+// まずは画面に出すために ref に入れる
+const me = ref<any>(null)
+const err = ref<any>(null)
+
+try {
+    me.value = await api.get("/me")
+} catch (e: any) {
+    err.value = {
+        status: e?.status ?? e?.response?.status ?? null,
+        message: e?.data ?? e?.message ?? String(e),
+    }
+    console.error("API error:", e)
+}
 </script>
 
 <template>
+    <div style="padding:16px">
+        <h1>/me チェック</h1>
 
-    <h1 class="text-white">ME PAGE</h1>
-    <div>
-        <p class="text-white">メール: {{ user?.email }}</p>
-        <p class="text-white">ユーザー名: {{ user?.displayName }}</p>
+        <h3>result</h3>
+        <pre>{{ me }}</pre>
+
+        <h3>error</h3>
+        <pre>{{ err }}</pre>
     </div>
 </template>

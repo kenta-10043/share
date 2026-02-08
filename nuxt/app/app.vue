@@ -2,16 +2,20 @@
 const { init, loading } = useAuth();
 onMounted(() => init());
 
+
 </script>
 
 <template>
 
     <div>
-
-        <NuxtRouteAnnouncer />
-        <NuxtPage />
-
+        <ClientOnly>
+            <NuxtRouteAnnouncer />
+            <NuxtPage />
+        </ClientOnly>
     </div>
-    <p v-if="loading" class="text-white text-center mt-6">loading...</p>
+    <ClientOnly>
+        <p v-if="loading" class="text-white text-center mt-6">loading...</p>
+    </ClientOnly>
+
 
 </template>

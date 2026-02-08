@@ -1,6 +1,15 @@
 <script setup lang="ts">
+const { getIdToken } = useAuth();
 const apiBase = useRuntimeConfig().public.apiBase;
-const { data, pending, error, refresh } = await useFetch(`${apiBase}/api/health`);
+
+const token = await getIdToken(); // これはOK（でも未ログインだと空になる）
+
+const { data: me, pending, error, refresh } = useFetch(`${apiBase}/api/me`, {
+    server: false,
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+});
+
+
 
 
 </script>

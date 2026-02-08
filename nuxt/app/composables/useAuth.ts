@@ -113,19 +113,26 @@ export const useAuth = () => {
   // ===============================
   // token取得（Laravel API用）
   // ===============================
-  const getIdToken = async () => {
-    if (!inited.value) init();
+ const getIdToken = async () => {
+   if (!import.meta.client) return null;
 
-    while (loading.value) {
-      await new Promise((r) => setTimeout(r, 30));
-    }
+   if (!inited.value) init();
 
-    const auth = getAuth();
-    const u = auth.currentUser;
-    if (!u) return null;
+   // 最大 3秒だけ待つ（無限ループ禁止）
+   const timeoutMs = 3000;
+   const start = Date.now();
+   while (loading.value) {
+     if (Date.now() - start > timeoutMs) return null;
+     await new Promise((r) => setTimeout(r, 30));
+   }
 
-    return await u.getIdToken();
-  };
+   const auth = getAuth();
+   const u = auth.currentUser;
+   if (!u) return null;
+
+   return await u.getIdToken();
+ };
+
 
   return {
     user,
