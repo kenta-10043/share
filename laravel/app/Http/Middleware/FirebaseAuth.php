@@ -12,8 +12,8 @@ class FirebaseAuth
     {
         $authHeader = $request->header('Authorization');
 
-        if (!$authHeader || !str_starts_with($authHeader, 'Bearer')) {
-            return response()->json(['massage' => 'トークンがありません'], 401);
+        if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+            return response()->json(['message' => 'トークンがありません'], 401);
         }
 
         $idToken = substr($authHeader, 7);
@@ -28,6 +28,9 @@ class FirebaseAuth
 
             $request->attributes->set('firebase_uid', $uid);
             $request->attributes->set('firebase_email', $email);
+
+            logger()->info('[fb] got token', ['len' => strlen($idToken)]);
+
 
             return $next($request);
         } catch (\Throwable $e) {

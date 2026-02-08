@@ -9,3 +9,10 @@ Route::get('/me', function (Request $request) {
         'email' => $request->attributes->get('firebase_email'),
     ]);
 })->middleware('fb.auth');
+
+Route::get('/debug-auth', function (\Illuminate\Http\Request $request) {
+    return response()->json([
+        'has_auth' => $request->hasHeader('Authorization'),
+        'auth' => $request->header('Authorization'),
+    ]);
+});
